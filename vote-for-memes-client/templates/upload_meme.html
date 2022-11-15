@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@400&family=Rubik+Mono+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css')  }}"
+    />
+    <title>Vote for memes</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo-wrapper">
+        <a href="/" class="logo-link">
+          <img
+            src="{{ url_for('static', filename='logo.svg') }}"
+            alt="logo"
+            class="logo"
+          />
+        </a>
+      </div>
+    </header>
+    <div class="site-wrapper">
+      <div class="meme-wrapper">
+        <div class="section-title">Upload meme</div>
+        <form
+          action=""
+          method="post"
+          class="upload-meme-form"
+          enctype="multipart/form-data"
+        >
+          <div class="form-group">
+            <label class="input-label" for="username">Your username</label>
+            <input
+              type="text"
+              name="username"
+              class="form-item-text"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <span id="uploaded-label">You've uploaded:</span>
+            <div class="btns">
+              <label for="upload-meme" class="meme-nav-btn"
+                >Select file
+
+                <input
+                  type="file"
+                  name="upload-meme"
+                  id="upload-meme"
+                  style="display: none"
+                  accept="image/png, image/jpeg, image/gif"
+                  required
+                />
+              </label>
+            </div>
+          </div>
+          <div class="btns">
+            <button type="submit" class="meme-nav-btn" style="border: 0">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="best-memes-wrapper">
+        <div class="section-title">
+          Best<br />
+          Memes
+        </div>
+        <div class="best-memes">
+          <div class="best-meme">
+            <div class="best-meme-place">1</div>
+            <img
+              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
+              alt=""
+              class="best-meme-img"
+            />
+            <div class="best-meme-votes">
+              <img
+                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
+                alt=""
+                srcset=""
+                width="40px"
+              />
+              <div class="votes votes-positive">+454</div>
+            </div>
+          </div>
+          <div class="best-meme">
+            <div class="best-meme-place">2</div>
+            <img
+              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
+              alt=""
+              class="best-meme-img"
+              height="100%"
+            />
+            <div class="best-meme-votes">
+              <img
+                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
+                alt=""
+                srcset=""
+                width="40px"
+              />
+              <div class="votes votes-positive">+454</div>
+            </div>
+          </div>
+          <div class="best-meme">
+            <div class="best-meme-place">3</div>
+            <img
+              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
+              alt=""
+              class="best-meme-img"
+              height="100%"
+            />
+            <div class="best-meme-votes">
+              <img
+                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
+                alt=""
+                srcset=""
+                width="40px"
+              />
+              <div class="votes votes-positive">+454</div>
+            </div>
+          </div>
+          <div class="best-meme">
+            <div class="best-meme-place">4</div>
+            <img
+              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
+              alt=""
+              class="best-meme-img"
+              height="100%"
+            />
+            <div class="best-meme-votes">
+              <img
+                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
+                alt=""
+                srcset=""
+                width="40px"
+              />
+              <div class="votes votes-positive">+454</div>
+            </div>
+          </div>
+          <div class="best-meme">
+            <div class="best-meme-place">5</div>
+            <img
+              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
+              alt=""
+              class="best-meme-img"
+              height="100%"
+            />
+            <div class="best-meme-votes">
+              <img
+                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
+                alt=""
+                srcset=""
+                width="40px"
+              />
+              <div class="votes votes-positive">+454</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const fileInput = document.querySelector("#upload-meme");
+      const fileTypes = [
+        "image/png",
+        "image/gif",
+        "image/jpeg",
+        "image/pjpeg",
+        "image/png",
+      ];
+
+      function validFileType(file) {
+        return fileTypes.includes(file.type);
+      }
+      fileInput.addEventListener("change", () => {
+        const dt = new DataTransfer();
+        const uploadedLabel = document.querySelector("#uploaded-label");
+        for (let i = 0; i < fileInput.files.length; i++) {
+          const file = fileInput.files[i];
+          uploadedLabel.innerHTML = `Unsupported filetype`;
+          if (validFileType(file)) {
+            dt.items.add(file);
+          }
+        }
+        uploadedLabel.innerHTML = `You've uploaded: ${
+          fileInput.files[0].name.length > 15
+            ? fileInput.files[0].name.slice(0, 15) + "..."
+            : fileInput.files[0].name
+        }`;
+        fileInput.removeEventListener("change");
+        fileInput.files = dt.files;
+      });
+    </script>
+  </body>
+</html>
