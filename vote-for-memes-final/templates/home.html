@@ -33,23 +33,23 @@
     <div class="site-wrapper">
       <div class="meme-wrapper">
         <div class="meme-section">
-          <div class="section-title">Meme by Username</div>
+          <div class="section-title">Meme by {{meme.author}}</div>
           <div class="meme">
             <img
-              src="{{ url_for('static', filename='pics/itiswednesday.jpg') }}"
+              src="{{ url_for('static', filename='pics/' + meme.image_filename) }}"
               alt=""
               srcset=""
               class="meme-img"
             />
             <div class="meme-votes">
-              <a href="/meme/1/upvote" class="meme-votes-btn">
+              <a href="/meme/{{meme.id}}/upvote" class="meme-votes-btn">
                 <img
                   src="{{ url_for('static', filename='arrow-up.svg') }}"
                   alt="Vote up"
                 />
               </a>
-              <div class="votes">+454</div>
-              <a href="/meme/1/downvote" class="meme-votes-btn">
+              <div class="votes">{{meme.rating}}</div>
+              <a href="/meme/{{meme.id}}/downvote" class="meme-votes-btn">
                 <img
                   src="{{ url_for('static', filename='arrow-down.svg') }}"
                   alt="Vote down"
@@ -58,8 +58,8 @@
             </div>
           </div>
           <div class="btns">
-            <a href="/" class="meme-nav-btn">Prev</a>
-            <a href="/" class="meme-nav-btn">Next</a>
+            <a href="/?meme_id={{prev_meme_id}}" class="meme-nav-btn">Prev</a>
+            <a href="/?meme_id={{next_meme_id}}" class="meme-nav-btn">Next</a>
           </div>
         </div>
       </div>
@@ -69,65 +69,18 @@
           Memes
         </div>
         <div class="best-memes">
-          <div class="best-meme">
-            <div class="best-meme-place">1</div>
+          {% for best_meme in best_memes %}
+          <a href="/?meme_id=best_meme.id" class="best-meme">
+            <div class="best-meme-place">{{loop.index}}</div>
             <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
+              src="{{url_for('static', filename='pics/' + best_meme.image_filename)}}"
               class="best-meme-img"
             />
             <div class="best-meme-votes">
-              <div class="votes">454</div>
+              <div class="votes">{{best_meme.rating}}</div>
             </div>
-          </div>
-          <div class="best-meme">
-            <div class="best-meme-place">2</div>
-            <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
-              class="best-meme-img"
-              height="100%"
-            />
-            <div class="best-meme-votes">
-              <div class="votes">454</div>
-            </div>
-          </div>
-          <div class="best-meme">
-            <div class="best-meme-place">3</div>
-            <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
-              class="best-meme-img"
-              height="100%"
-            />
-            <div class="best-meme-votes">
-              <div class="votes">454</div>
-            </div>
-          </div>
-          <div class="best-meme">
-            <div class="best-meme-place">4</div>
-            <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
-              class="best-meme-img"
-              height="100%"
-            />
-            <div class="best-meme-votes">
-              <div class="votes">454</div>
-            </div>
-          </div>
-          <div class="best-meme">
-            <div class="best-meme-place">5</div>
-            <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
-              class="best-meme-img"
-              height="100%"
-            />
-            <div class="best-meme-votes">
-              <div class="votes">454</div>
-            </div>
-          </div>
+          </a>
+          {% endfor %}
         </div>
       </div>
     </div>

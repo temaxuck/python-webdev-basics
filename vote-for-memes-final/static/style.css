@@ -10,6 +10,10 @@ body {
   min-height: 100vh;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Header */
 
 header {
@@ -205,8 +209,8 @@ img.meme-img {
 }
 
 .best-meme-img {
-  height: 100%;
   max-width: 150px;
+  max-height: 100px;
 }
 
 .best-meme-place {

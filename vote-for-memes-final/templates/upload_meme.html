@@ -77,95 +77,18 @@
           Memes
         </div>
         <div class="best-memes">
-          <div class="best-meme">
-            <div class="best-meme-place">1</div>
+          {% for best_meme in best_memes %}
+          <a href="/?meme_id=best_meme.id" class="best-meme">
+            <div class="best-meme-place">{{loop.index}}</div>
             <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
+              src="{{url_for('static', filename='pics/' + best_meme.image_filename)}}"
               class="best-meme-img"
             />
             <div class="best-meme-votes">
-              <img
-                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
-                alt=""
-                srcset=""
-                width="40px"
-              />
-              <div class="votes votes-positive">+454</div>
+              <div class="votes">{{best_meme.rating}}</div>
             </div>
-          </div>
-          <div class="best-meme">
-            <div class="best-meme-place">2</div>
-            <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
-              class="best-meme-img"
-              height="100%"
-            />
-            <div class="best-meme-votes">
-              <img
-                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
-                alt=""
-                srcset=""
-                width="40px"
-              />
-              <div class="votes votes-positive">+454</div>
-            </div>
-          </div>
-          <div class="best-meme">
-            <div class="best-meme-place">3</div>
-            <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
-              class="best-meme-img"
-              height="100%"
-            />
-            <div class="best-meme-votes">
-              <img
-                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
-                alt=""
-                srcset=""
-                width="40px"
-              />
-              <div class="votes votes-positive">+454</div>
-            </div>
-          </div>
-          <div class="best-meme">
-            <div class="best-meme-place">4</div>
-            <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
-              class="best-meme-img"
-              height="100%"
-            />
-            <div class="best-meme-votes">
-              <img
-                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
-                alt=""
-                srcset=""
-                width="40px"
-              />
-              <div class="votes votes-positive">+454</div>
-            </div>
-          </div>
-          <div class="best-meme">
-            <div class="best-meme-place">5</div>
-            <img
-              src="{{url_for('static', filename='pics/itiswednesday.jpg')}}"
-              alt=""
-              class="best-meme-img"
-              height="100%"
-            />
-            <div class="best-meme-votes">
-              <img
-                src="{{url_for('static', filename='mini-arrow-up.svg')}}"
-                alt=""
-                srcset=""
-                width="40px"
-              />
-              <div class="votes votes-positive">+454</div>
-            </div>
-          </div>
+          </a>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -201,6 +124,21 @@
         fileInput.removeEventListener("change");
         fileInput.files = dt.files;
       });
+
+      window.onload = () => {
+        const votesSections = document.querySelectorAll(".votes");
+        for (votesSection of votesSections) {
+          try {
+            const votesNumber = parseInt(votesSection.innerHTML);
+            if (votesNumber >= 0) {
+              votesSection.classList.add("votes-positive");
+              votesSection.innerHTML = `+${votesNumber}`;
+            } else votesSection.classList.add("votes-negative");
+          } catch {
+            console.log("Could not parse votes number for:", votesSection);
+          }
+        }
+      };
     </script>
   </body>
 </html>
